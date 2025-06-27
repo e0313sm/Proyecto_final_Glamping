@@ -23,7 +23,7 @@ class Cliente:
                     clientes[i] = self
                     break
         
-        # Guardar en localStorage (simulado)
+        # Guardar en localStorage
         datos = [{
             'id': c.id,
             'nombre': c.nombre,
