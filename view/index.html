@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Glamping</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Gestión de Glamping</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="glampings.html">Glampings</a></li>
+                <li><a href="reservas.html">Reservas</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h2>Bienvenido al Sistema de Gestión de Glamping</h2>
+        <p>Este sistema le permite administrar clientes, glampings y reservas de manera eficiente.</p>
+        
+        <div class="dashboard">
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <h3>Clientes</h3>
+                    <p>Gestione la información de sus clientes.</p>
+                    <a href="clientes.html" class="dashboard-link">
+                        <button>Ver Clientes</button>
+                    </a>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Glampings</h3>
+                    <p>Administre los glampings disponibles.</p>
+                    <a href="glampings.html" class="dashboard-link">
+                        <button>Ver Glampings</button>
+                    </a>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Reservas</h3>
+                    <p>Gestione las reservas de los glampings.</p>
+                    <a href="reservas.html" class="dashboard-link">
+                        <button>Ver Reservas</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Sistema de Gestión de Glamping. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <!-- Modelos y Controladores -->
+    <script src="../model/Cliente.js"></script>
+    <script src="../model/Glamping.js"></script>
+    <script src="../model/Reserva.js"></script>
+    <script src="../controller/ClienteController.js"></script>
+    <script src="../controller/GlampingController.js"></script>
+    <script src="../controller/ReservaController.js"></script>
+</body>
+</html> 

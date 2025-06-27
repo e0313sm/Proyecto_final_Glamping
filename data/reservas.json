@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "clienteId": 1,
+    "glampingId": 2,
+    "fechaInicio": "2023-06-15",
+    "fechaFin": "2023-06-18",
+    "totalPagado": 450000,
+    "estado": "confirmada"
+  },
+  {
+    "id": 2,
+    "clienteId": 3,
+    "glampingId": 1,
+    "fechaInicio": "2023-07-10",
+    "fechaFin": "2023-07-12",
+    "totalPagado": 240000,
+    "estado": "pendiente"
+  },
+  {
+    "id": 3,
+    "clienteId": 2,
+    "glampingId": 3,
+    "fechaInicio": "2023-08-05",
+    "fechaFin": "2023-08-10",
+    "totalPagado": 1000000,
+    "estado": "confirmada"
+  }
+] 

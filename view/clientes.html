@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clientes - Sistema de Glamping</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Gestión de Glamping</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="glampings.html">Glampings</a></li>
+                <li><a href="reservas.html">Reservas</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h2>Gestión de Clientes</h2>
+        
+        <div id="alerts-container"></div>
+        
+        <div class="form-container">
+            <h3>Nuevo Cliente</h3>
+            <form id="form-cliente">
+                <input type="hidden" id="cliente-id">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="documento">Documento</label>
+                    <input type="text" id="documento" name="documento" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" id="btn-guardar" class="success">Guardar</button>
+                    <button type="button" id="btn-cancelar" style="display: none;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        
+        <h3>Lista de Clientes</h3>
+        <div class="table-container">
+            <table id="tabla-clientes">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Documento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los datos de los clientes se cargarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal" id="modal-confirmar">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirmar eliminación</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea eliminar este cliente? Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-confirmar-eliminar" class="danger">Eliminar</button>
+                <button class="close-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Sistema de Gestión de Glamping. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <!-- Inicialización de datos -->
+    <script src="js/init-data.js"></script>
+    
+    <!-- Modelos y Controladores -->
+    <script src="../model/Cliente.js"></script>
+    <script src="../controller/ClienteController.js"></script>
+    
+    <!-- Vista -->
+    <script src="js/clientes.js"></script>
+</body>
+</html> 

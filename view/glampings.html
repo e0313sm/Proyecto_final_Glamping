@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Glampings - Sistema de Glamping</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Gestión de Glamping</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="glampings.html">Glampings</a></li>
+                <li><a href="reservas.html">Reservas</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h2>Gestión de Glampings</h2>
+        
+        <div id="alerts-container"></div>
+        
+        <div class="form-container">
+            <h3>Nuevo Glamping</h3>
+            <form id="form-glamping">
+                <input type="hidden" id="glamping-id">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="capacidad">Capacidad</label>
+                    <input type="number" id="capacidad" name="capacidad" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="precioPorNoche">Precio por noche</label>
+                    <input type="number" id="precioPorNoche" name="precioPorNoche" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="caracteristicas">Características (separadas por coma)</label>
+                    <textarea id="caracteristicas" name="caracteristicas" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="disponible">Disponible</label>
+                    <select id="disponible" name="disponible">
+                        <option value="true">Sí</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" id="btn-guardar" class="success">Guardar</button>
+                    <button type="button" id="btn-cancelar" style="display: none;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        
+        <h3>Lista de Glampings</h3>
+        
+        <!-- Vista de tarjetas -->
+        <div class="glamping-cards" id="glamping-cards">
+            <!-- Los datos de los glampings se cargarán aquí dinámicamente -->
+        </div>
+        
+        <!-- Vista de tabla (alternativa) -->
+        <div class="table-container">
+            <table id="tabla-glampings">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Capacidad</th>
+                        <th>Precio/Noche</th>
+                        <th>Disponible</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los datos de los glampings se cargarán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal para ver detalles -->
+    <div class="modal" id="modal-detalles">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalles del Glamping</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="detalles-glamping">
+                <!-- Los detalles del glamping se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal" id="modal-confirmar">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirmar eliminación</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea eliminar este glamping? Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-confirmar-eliminar" class="danger">Eliminar</button>
+                <button class="close-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Sistema de Gestión de Glamping. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <!-- Inicialización de datos -->
+    <script src="js/init-data.js"></script>
+    
+    <!-- Modelos y Controladores -->
+    <script src="../model/Cliente.js"></script>
+    <script src="../model/Glamping.js"></script>
+    <script src="../model/Reserva.js"></script>
+    <script src="../controller/GlampingController.js"></script>
+    <script src="../controller/ReservaController.js"></script>
+    
+    <!-- Vista -->
+    <script src="js/glampings.js"></script>
+</body>
+</html> 

@@ -1,0 +1,106 @@
+[
+  {
+    "id": 1,
+    "nombre": "Cabaña del Bosque",
+    "capacidad": 4,
+    "precioPorNoche": 120000,
+    "caracteristicas": ["Chimenea", "Vista al lago", "Cocina equipada"],
+    "disponible": true
+  },
+  {
+    "id": 2,
+    "nombre": "Domo Estelar",
+    "capacidad": 2,
+    "precioPorNoche": 150000,
+    "caracteristicas": ["Techo transparente", "Jacuzzi", "Desayuno incluido"],
+    "disponible": true
+  },
+  {
+    "id": 3,
+    "nombre": "Tienda Safari",
+    "capacidad": 6,
+    "precioPorNoche": 200000,
+    "caracteristicas": ["Terraza", "Parrilla", "Cerca del río"],
+    "disponible": true
+  },
+  {
+    "id": 4,
+    "nombre": "Cabaña Alpina",
+    "capacidad": 5,
+    "precioPorNoche": 180000,
+    "caracteristicas": ["Sauna", "Mirador", "Hamaca"],
+    "disponible": true
+  },
+  {
+    "id": 5,
+    "nombre": "Yurta Mongola",
+    "capacidad": 3,
+    "precioPorNoche": 130000,
+    "caracteristicas": ["Decoración étnica", "Estufa a leña", "Jardín privado"],
+    "disponible": false
+  },
+  {
+    "id": 6,
+    "nombre": "Casa del Árbol",
+    "capacidad": 2,
+    "precioPorNoche": 160000,
+    "caracteristicas": ["Elevada", "Balcón", "Desayuno orgánico"],
+    "disponible": true
+  },
+  {
+    "id": 7,
+    "nombre": "Igloo Moderno",
+    "capacidad": 2,
+    "precioPorNoche": 175000,
+    "caracteristicas": ["Climatizado", "Cama redonda", "Iluminación ambiental"],
+    "disponible": true
+  },
+  {
+    "id": 8,
+    "nombre": "Cabaña Lakeside",
+    "capacidad": 6,
+    "precioPorNoche": 210000,
+    "caracteristicas": ["Acceso al lago", "Bote incluido", "Fogata"],
+    "disponible": true
+  },
+  {
+    "id": 9,
+    "nombre": "Pod Futurista",
+    "capacidad": 2,
+    "precioPorNoche": 190000,
+    "caracteristicas": ["Domótica", "Ventanas panorámicas", "Sonido envolvente"],
+    "disponible": false
+  },
+  {
+    "id": 10,
+    "nombre": "Tipi Nativo",
+    "capacidad": 4,
+    "precioPorNoche": 140000,
+    "caracteristicas": ["Auténtico diseño", "Área de meditación", "Senderos naturales"],
+    "disponible": true
+  },
+  {
+    "id": 11,
+    "nombre": "Bungalow Tropical",
+    "capacidad": 3,
+    "precioPorNoche": 155000,
+    "caracteristicas": ["Piscina privada", "Hamacas", "Bar exterior"],
+    "disponible": true
+  },
+  {
+    "id": 12,
+    "nombre": "Vagón de Tren Restaurado",
+    "capacidad": 4,
+    "precioPorNoche": 185000,
+    "caracteristicas": ["Historia auténtica", "Decoración vintage", "Vista panorámica"],
+    "disponible": true
+  },
+  {
+    "id": 13,
+    "nombre": "Contenedor Minimalista",
+    "capacidad": 2,
+    "precioPorNoche": 145000,
+    "caracteristicas": ["Diseño moderno", "Eficiencia energética", "Terraza solar"],
+    "disponible": false
+  }
+] 
