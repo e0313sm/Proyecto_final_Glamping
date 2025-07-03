@@ -1,6 +1,6 @@
 from datetime import datetime
-from cliente import Cliente
-from glamping import Glamping
+from Cliente import Cliente
+from Glamping import Glamping
 
 class Reserva:
     def __init__(self, id, cliente, glamping, fecha_inicio, fecha_fin, total_pagado, estado):
