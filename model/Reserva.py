@@ -1,5 +1,5 @@
 from datetime import datetime
-from ciente import Cliente
+from cliente import Cliente
 from glamping import Glamping
 
 class Reserva:
