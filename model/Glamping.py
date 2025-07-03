@@ -1,250 +1,177 @@
-/**
- * Clase que representa un glamping
- */
-class Glamping {
-    /**
-     * Constructor de la clase Glamping
-     * @param {number} id - Identificador único del glamping
-     * @param {string} nombre - Nombre del glamping
-     * @param {number} capacidad - Capacidad del glamping (número de personas)
-     * @param {number} precioPorNoche - Precio por noche del glamping
-     * @param {Array} caracteristicas - Características del glamping (comodidades, servicios, etc.)
-     * @param {boolean} disponible - Indica si el glamping está disponible para reservar
-     */
-    constructor(id, nombre, capacidad, precioPorNoche, caracteristicas, disponible) {
-        this.id = id;
-        this.nombre = nombre;
-        this.capacidad = capacidad;
-        this.precioPorNoche = precioPorNoche;
-        this.caracteristicas = caracteristicas || [];
-        this.disponible = disponible !== undefined ? disponible : true;
-    }
+class Glamping:
+    def __init__(self, id, nombre, capacidad, precioPorNoche, caracteristicas, disponible):
+        self.id = id
+        self.nombre = nombre
+        self.capacidad = capacidad
+        self.precioPorNoche = precioPorNoche
+        self.caracteristicas = caracteristicas
+        self.disponible = disponible
 
-    /**
-     * Obtiene el id del glamping
-     * @returns {number} El id del glamping
-     */
-    getId() {
-        return this.id;
-    }
+    def getId(self):
+        return self.id
 
-    /**
-     * Establece el id del glamping
-     * @param {number} id - El nuevo id del glamping
-     */
-    setId(id) {
-        this.id = id;
-    }
+    def setId(self, id):
+        self.id = id
 
-    /**
-     * Obtiene el nombre del glamping
-     * @returns {string} El nombre del glamping
-     */
-    getNombre() {
-        return this.nombre;
-    }
+    def getNombre(self):
+        return self.nombre
 
-    /**
-     * Establece el nombre del glamping
-     * @param {string} nombre - El nuevo nombre del glamping
-     */
-    setNombre(nombre) {
-        this.nombre = nombre;
-    }
+    def setNombre(self, nombre):
+        self.nombre = nombre
 
-    /**
-     * Obtiene la capacidad del glamping
-     * @returns {number} La capacidad del glamping
-     */
-    getCapacidad() {
-        return this.capacidad;
-    }
+    def getCapacidad(self):
+        return self.capacidad
 
-    /**
-     * Establece la capacidad del glamping
-     * @param {number} capacidad - La nueva capacidad del glamping
-     */
-    setCapacidad(capacidad) {
-        this.capacidad = capacidad;
-    }
+    def setCapacidad(self, capacidad):
+        self.capacidad = capacidad
 
-    /**
-     * Obtiene el precio por noche del glamping
-     * @returns {number} El precio por noche del glamping
-     */
-    getPrecioPorNoche() {
-        return this.precioPorNoche;
-    }
+    def getPrecioPorNoche(self):
+        return self.precioPorNoche
 
-    /**
-     * Establece el precio por noche del glamping
-     * @param {number} precioPorNoche - El nuevo precio por noche del glamping
-     */
-    setPrecioPorNoche(precioPorNoche) {
-        this.precioPorNoche = precioPorNoche;
-    }
+    def setPrecioPorNoche(self, precioPorNoche):
+        self.precioPorNoche = precioPorNoche
 
-    /**
-     * Obtiene las características del glamping
-     * @returns {Array} Las características del glamping
-     */
-    getCaracteristicas() {
-        return this.caracteristicas;
-    }
+    def getCaracteristicas(self):
+        return self.caracteristicas
 
-    /**
-     * Establece las características del glamping
-     * @param {Array} caracteristicas - Las nuevas características del glamping
-     */
-    setCaracteristicas(caracteristicas) {
-        this.caracteristicas = caracteristicas;
-    }
+    def setCaracteristicas(self, caracteristicas):
+        self.caracteristicas = caracteristicas
 
-    /**
-     * Verifica si el glamping está disponible
-     * @returns {boolean} true si el glamping está disponible, false en caso contrario
-     */
-    isDisponible() {
-        return this.disponible;
-    }
+    def isDisponible(self):
+        return self.disponible
 
-    /**
-     * Establece la disponibilidad del glamping
-     * @param {boolean} disponible - La nueva disponibilidad del glamping
-     */
-    setDisponible(disponible) {
-        this.disponible = disponible;
-    }
+    def setDisponible(self, disponible):
+        self.disponible = disponible
 
-    /**
-     * Convierte los datos del glamping a formato JSON
-     * @returns {Object} Objeto con los datos del glamping
-     */
-    toJSON() {
+    def toJSON(self):
         return {
-            id: this.id,
-            nombre: this.nombre,
-            capacidad: this.capacidad,
-            precioPorNoche: this.precioPorNoche,
-            caracteristicas: this.caracteristicas,
-            disponible: this.disponible
-        };
-    }
-
-    /**
-     * Guarda el glamping actual en el almacenamiento local (localStorage)
-     * @returns {boolean} true si el glamping se guardó correctamente, false en caso contrario
-     */
-    guardar() {
-        try {
-            // Leer glampings del localStorage
-            let glampings = Glamping.obtenerGlampings();
-            
-            // Obtener el ID más alto para asignar uno nuevo si es necesario
-            const maxId = glampings.reduce((max, glamping) => 
-                glamping.getId() > max ? glamping.getId() : max, 0);
-            
-            // Si el glamping no tiene ID, asignarle uno nuevo
-            if (!this.id) {
-                this.id = maxId + 1;
-            }
-            
-            // Verificar si el glamping ya existe para actualizarlo
-            const index = glampings.findIndex(g => g.getId() === this.id);
-            
-            if (index !== -1) {
-                // Actualizar glamping existente
-                glampings[index] = this;
-            } else {
-                // Agregar nuevo glamping
-                glampings.push(this);
-            }
-            
-            // Convertir los glampings a formato JSON
-            const glampingsJSON = glampings.map(glamping => glamping.toJSON());
-            
-            // Guardar en localStorage
-            localStorage.setItem('glampings', JSON.stringify(glampingsJSON));
-            return true;
-        } catch (error) {
-            console.error('Error al guardar el glamping:', error);
-            return false;
+            "id": self.id,
+            "nombre": self.nombre,
+            "capacidad": self.capacidad,
+            "precioPorNoche": self.precioPorNoche,
+            "caracteristicas": self.caracteristicas,
+            "disponible": self.disponible
         }
-    }
 
-    /**
-     * Obtiene todos los glampings del almacenamiento local (localStorage)
-     * @returns {Array} Array de objetos Glamping
-     */
-    static obtenerGlampings() {
-        try {
-            // Obtener datos del localStorage
-            const glampingsJSON = localStorage.getItem('glampings');
+    def guardar(self):
+        """
+        Guarda el glamping actual en el archivo JSON
+        @returns {bool} True si el glamping se guardó correctamente, False en caso contrario
+        """
+        try:
+            import json
+            import os
             
-            if (!glampingsJSON) {
-                return [];
-            }
+            # Leer glampings del archivo JSON
+            glampings = Glamping.obtenerGlampings()
             
-            // Convertir datos JSON a objetos Glamping
-            const glampings = JSON.parse(glampingsJSON).map(glampingJSON => 
-                new Glamping(
-                    glampingJSON.id,
-                    glampingJSON.nombre,
-                    glampingJSON.capacidad,
-                    glampingJSON.precioPorNoche,
-                    glampingJSON.caracteristicas,
-                    glampingJSON.disponible
+            # Obtener el ID más alto para asignar uno nuevo si es necesario
+            max_id = max([glamping.getId() for glamping in glampings], default=0)
+            
+            # Si el glamping no tiene ID, asignarle uno nuevo
+            if not self.id:
+                self.id = max_id + 1
+            
+            # Verificar si el glamping ya existe para actualizarlo
+            index = next((i for i, g in enumerate(glampings) if g.getId() == self.id), -1)
+            
+            if index != -1:
+                # Actualizar glamping existente
+                glampings[index] = self
+            else:
+                # Agregar nuevo glamping
+                glampings.append(self)
+            
+            # Convertir los glampings a formato JSON
+            glampings_json = [glamping.toJSON() for glamping in glampings]
+            
+            # Guardar en archivo JSON
+            file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'glampings.json')
+            with open(file_path, 'w', encoding='utf-8') as file:
+                json.dump(glampings_json, file, indent=4, ensure_ascii=False)
+            
+            return True
+        except Exception as error:
+            print(f'Error al guardar el glamping: {error}')
+            return False
+
+    @staticmethod
+    def obtenerGlampings():
+        """
+        Obtiene todos los glampings del archivo JSON
+        @returns {list} Lista de objetos Glamping
+        """
+        try:
+            import json
+            import os
+            
+            # Obtener datos del archivo JSON
+            file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'glampings.json')
+            
+            if not os.path.exists(file_path):
+                return []
+            
+            with open(file_path, 'r', encoding='utf-8') as file:
+                glampings_json = json.load(file)
+            
+            # Convertir datos JSON a objetos Glamping
+            glampings = []
+            for glamping_json in glampings_json:
+                glamping = Glamping(
+                    glamping_json['id'],
+                    glamping_json['nombre'],
+                    glamping_json['capacidad'],
+                    glamping_json['precioPorNoche'],
+                    glamping_json['caracteristicas'],
+                    glamping_json['disponible']
                 )
-            );
+                glampings.append(glamping)
             
-            return glampings;
-        } catch (error) {
-            console.error('Error al obtener los glampings:', error);
-            return [];
-        }
-    }
+            return glampings
+        except Exception as error:
+            print(f'Error al obtener los glampings: {error}')
+            return []
 
-    /**
-     * Obtiene un glamping por su ID
-     * @param {number} id - ID del glamping a buscar
-     * @returns {Glamping|null} El glamping encontrado o null si no existe
-     */
-    static obtenerGlampingPorId(id) {
-        const glampings = Glamping.obtenerGlampings();
+    @staticmethod
+    def obtenerGlampingPorId(id):
+        """
+        Obtiene un glamping por su ID
+        @param {int} id - ID del glamping a buscar
+        @returns {Glamping|None} El glamping encontrado o None si no existe
+        """
+        glampings = Glamping.obtenerGlampings()
         
-        // Recorrer el array de glampings para encontrar el que coincida con el ID
-        for (let i = 0; i < glampings.length; i++) {
-            if (glampings[i].getId() === id) {
-                return glampings[i];
-            }
-        }
+        # Recorrer la lista de glampings para encontrar el que coincida con el ID
+        for glamping in glampings:
+            if glamping.getId() == id:
+                return glamping
         
-        // Si no se encuentra, retornar null
-        return null;
-    }
+        # Si no se encuentra, retornar None
+        return None
 
-    /**
-     * Obtiene los glampings disponibles
-     * @returns {Array} Array de objetos Glamping disponibles
-     */
-    static obtenerGlampingsDisponibles() {
-        const glampings = Glamping.obtenerGlampings();
-        return glampings.filter(glamping => glamping.isDisponible());
-    }
+    @staticmethod
+    def obtenerGlampingsDisponibles():
+        """
+        Obtiene los glampings disponibles
+        @returns {list} Lista de objetos Glamping disponibles
+        """
+        glampings = Glamping.obtenerGlampings()
+        return [glamping for glamping in glampings if glamping.isDisponible()]
 
-    /**
-     * Crea una instancia de Glamping a partir de un objeto JSON
-     * @param {Object} json - Objeto con los datos del glamping
-     * @returns {Glamping} Una nueva instancia de Glamping
-     */
-    static fromJSON(json) {
-        return new Glamping(
-            json.id,
-            json.nombre,
-            json.capacidad,
-            json.precioPorNoche,
-            json.caracteristicas,
-            json.disponible
-        );
-    }
-} 
+    @staticmethod
+    def fromJSON(json_data):
+        """
+        Crea una instancia de Glamping a partir de un objeto JSON
+        @param {dict} json_data - Objeto con los datos del glamping
+        @returns {Glamping} Una nueva instancia de Glamping
+        """
+        return Glamping(
+            json_data['id'],
+            json_data['nombre'],
+            json_data['capacidad'],
+            json_data['precioPorNoche'],
+            json_data['caracteristicas'],
+            json_data['disponible']
+        )
+
+    
