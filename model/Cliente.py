@@ -2,7 +2,7 @@ import json
 import os
 
 class Cliente:
-    ARCHIVO = 'data/usuarios.json'
+    ARCHIVO = 'data/clientes.json'
 
     def __init__(self, id, nombre, email, telefono, documento):
         self.id = id
