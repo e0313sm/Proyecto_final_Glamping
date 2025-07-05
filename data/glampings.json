@@ -1,17 +1,5 @@
 [
     {
-        "id": 1,
-        "nombre": "Cabaña del Bosque",
-        "capacidad": 4,
-        "precioPorNoche": 120000,
-        "caracteristicas": [
-            "Chimenea",
-            "Vista al lago",
-            "Cocina equipada"
-        ],
-        "disponible": true
-    },
-    {
         "id": 2,
         "nombre": "Domo Estelar",
         "capacidad": 2,
