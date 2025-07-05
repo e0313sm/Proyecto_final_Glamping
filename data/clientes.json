@@ -1,12 +1,5 @@
 [
     {
-        "id": 1,
-        "nombre": "Mar\u00ed\u00ada Garc\u00ed\u00ada",
-        "email": "maria@ejemplo.com",
-        "telefono": "555-1234",
-        "documento": "12345678"
-    },
-    {
         "id": 2,
         "nombre": "Juan Perez",
         "email": "juan@ejemplo.com",

@@ -1,3 +1,4 @@
+# app.py
 from flask import Flask, render_template, request, jsonify
 from controller.ClienteController import ClienteController
 from controller.GlampingController import GlampingController
@@ -11,7 +12,7 @@ glamping_controller = GlampingController()
 reserva_controller = ReservaController()
 
 # -------------------------------
-# VISTAS HTML (para render_template)
+# VISTAS HTML
 # -------------------------------
 
 @app.route('/')
@@ -22,15 +23,12 @@ def index():
 def clientes():
     info = ''
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        telefono = request.form['telefono']
-        email = request.form['email']
-        documento = request.form['documento']
+        data = request.form
         cliente_controller.crear({
-            'nombre': nombre,
-            'telefono': telefono,
-            'email': email,
-            'documento': documento
+            'nombre': data['nombre'],
+            'telefono': data['telefono'],
+            'email': data['email'],
+            'documento': data['documento']
         })
         info = "Cliente registrado correctamente"
     clientes = cliente_controller.obtener_todos()
@@ -40,50 +38,28 @@ def clientes():
 def glampings():
     info = ''
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        capacidad = request.form['capacidad']
-        precio = request.form['precioPorNoche']
-        caracteristicas = request.form['caracteristicas'].split(',')  # Separar por coma
-        disponible = request.form['disponible'].lower() == 'true'
+        data = request.form
         glamping_controller.crear({
-            'nombre': nombre,
-            'capacidad': capacidad,
-            'precioPorNoche': precio,
-            'caracteristicas': caracteristicas,
-            'disponible': disponible
+            'nombre': data['nombre'],
+            'capacidad': int(data['capacidad']),
+            'precioPorNoche': float(data['precioPorNoche']),
+            'caracteristicas': data['caracteristicas'].split(','),
+            'disponible': data['disponible'].lower() == 'true'
         })
         info = "Glamping registrado correctamente"
     glampings = glamping_controller.obtener_todos()
     return render_template('glampings.html', glampings=glampings, info=info)
 
-@app.route('/reservas', methods=['GET', 'POST'])
+@app.route('/reservas', methods=['GET'])
 def reservas():
-    info = ''
-    if request.method == 'POST':
-        cliente_id = request.form['cliente']
-        glamping_id = request.form['glamping']
-        fecha_inicio = request.form['fechaInicio']
-        fecha_fin = request.form['fechaFin']
-        total_pagado = request.form.get('totalPagado', 0)
-        estado = request.form['estado']
-
-        reserva_controller.crear({
-            'cliente_id': cliente_id,
-            'glamping_id': glamping_id,
-            'fecha_inicio': fecha_inicio,
-            'fecha_fin': fecha_fin,
-            'total_pagado': total_pagado,
-            'estado': estado
-        })
-        info = "Reserva registrada correctamente"
     reservas = reserva_controller.obtener_todas()
-    return render_template('reservas.html', reservas=reservas, info=info)
+    return render_template('reservas.html', reservas=reservas)
 
 # -------------------------------
-# API REST para conexión con fetch()
+# API REST
 # -------------------------------
 
-# -------- CLIENTES --------
+# CLIENTES
 @app.route('/api/clientes', methods=['GET'])
 def api_listar_clientes():
     return jsonify(cliente_controller.obtener_todos())
@@ -98,27 +74,18 @@ def api_obtener_cliente(id):
 @app.route('/api/clientes', methods=['POST'])
 def api_crear_cliente():
     data = request.get_json()
-    resultado = cliente_controller.crear(data)
-    if isinstance(resultado, tuple):
-        return jsonify(resultado[0]), resultado[1]
-    return jsonify(resultado)
+    return jsonify(cliente_controller.crear(data))
 
 @app.route('/api/clientes/<int:id>', methods=['PUT'])
 def api_actualizar_cliente(id):
     data = request.get_json()
-    resultado = cliente_controller.actualizar(id, data)
-    if isinstance(resultado, tuple):
-        return jsonify(resultado[0]), resultado[1]
-    return jsonify(resultado)
+    return jsonify(cliente_controller.actualizar(id, data))
 
 @app.route('/api/clientes/<int:id>', methods=['DELETE'])
 def api_eliminar_cliente(id):
-    resultado = cliente_controller.eliminar(id)
-    if isinstance(resultado, tuple):
-        return jsonify(resultado[0]), resultado[1]
-    return jsonify(resultado)
+    return jsonify(cliente_controller.eliminar(id))
 
-# -------- GLAMPINGS --------
+# GLAMPINGS
 @app.route('/api/glampings', methods=['GET'])
 def api_listar_glampings():
     return jsonify(glamping_controller.obtener_todos())
@@ -133,26 +100,42 @@ def api_obtener_glamping(id):
 @app.route('/api/glampings', methods=['POST'])
 def api_crear_glamping():
     data = request.get_json()
-    resultado = glamping_controller.crear(data)
-    if isinstance(resultado, tuple):
-        return jsonify(resultado[0]), resultado[1]
-    return jsonify(resultado)
+    return jsonify(glamping_controller.crear(data))
 
 @app.route('/api/glampings/<int:id>', methods=['PUT'])
 def api_actualizar_glamping(id):
     data = request.get_json()
-    resultado = glamping_controller.actualizar(id, data)
-    if isinstance(resultado, tuple):
-        return jsonify(resultado[0]), resultado[1]
-    return jsonify(resultado)
+    return jsonify(glamping_controller.actualizar(id, data))
 
 @app.route('/api/glampings/<int:id>', methods=['DELETE'])
 def api_eliminar_glamping(id):
-    resultado = glamping_controller.eliminar(id)
-    if isinstance(resultado, tuple):
-        return jsonify(resultado[0]), resultado[1]
-    return jsonify(resultado)
+    return jsonify(glamping_controller.eliminar(id))
 
-# -------------------------------
+# RESERVAS
+@app.route('/api/reservas', methods=['GET'])
+def api_listar_reservas():
+    return jsonify(reserva_controller.obtener_todas())
+
+@app.route('/api/reservas/<int:id>', methods=['GET'])
+def api_obtener_reserva(id):
+    reserva = reserva_controller.buscar_por_id(id)
+    if reserva:
+        return jsonify(reserva)
+    return jsonify({'error': 'Reserva no encontrada'}), 404
+
+@app.route('/api/reservas', methods=['POST'])
+def api_crear_reserva():
+    data = request.get_json()
+    return jsonify(reserva_controller.crear(data))
+
+@app.route('/api/reservas/<int:id>', methods=['PUT'])
+def api_actualizar_reserva(id):
+    data = request.get_json()
+    return jsonify(reserva_controller.actualizar(id, data))
+
+@app.route('/api/reservas/<int:id>', methods=['DELETE'])
+def api_eliminar_reserva(id):
+    return jsonify(reserva_controller.eliminar(id))
+
 if __name__ == '__main__':
     app.run(debug=True)

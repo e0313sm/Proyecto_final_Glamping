@@ -203,17 +203,7 @@
     </footer>
     
     <!-- Inicialización de datos -->
-    <script src="js/init-data.js"></script>
-    
-    <!-- Modelos y Controladores -->
-    <script src="../model/Cliente.js"></script>
-    <script src="../model/Glamping.js"></script>
-    <script src="../model/Reserva.js"></script>
-    <script src="../controller/ClienteController.js"></script>
-    <script src="../controller/GlampingController.js"></script>
-    <script src="../controller/ReservaController.js"></script>
-    
-    <!-- Vista -->
-    <script src="js/reservas.js"></script>
+    <script src="{{ url_for('static', filename='js/init-data.js') }}"></script>    
+    <script src="{{ url_for('static', filename='js/reservas.js') }}"></script>    
 </body>
 </html> 

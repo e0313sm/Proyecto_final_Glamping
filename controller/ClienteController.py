@@ -2,8 +2,6 @@ import json
 import re
 from model.Cliente import Cliente
 
-
-
 class ClienteController:
     def __init__(self):
         self.archivo = 'data/clientes.json'
@@ -75,7 +73,8 @@ class ClienteController:
         if not cliente:
             return {"error": "Cliente no encontrado"}, 404
 
-        # Verificar si tiene reservas (real o simulado)
+        # Importar aquí para evitar importaciones circulares
+        from controller.ReservaController import ReservaController
         reserva_controller = ReservaController()
         reservas = reserva_controller.obtener_reservas_cliente(id)
         if reservas:
