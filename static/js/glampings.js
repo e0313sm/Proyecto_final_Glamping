@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = {
             nombre: nombreInput.value,
             capacidad: parseInt(capacidadInput.value),
-            precio_por_noche: parseInt(precioPorNocheInput.value),
+            precioPorNoche: parseInt(precioPorNocheInput.value),
             caracteristicas: caracteristicasInput.value.split(',').map(c => c.trim()),
             disponible: disponibleInput.value === 'true'
         };
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="glamping-card-header"><h3>${g.nombre}</h3></div>
                 <div class="glamping-card-body">
                     <p><strong>Capacidad:</strong> ${g.capacidad} personas</p>
-                    <p><strong>Precio por noche:</strong> $${g.precio_por_noche.toLocaleString()}</p>
+                    <p><strong>Precio por noche:</strong> $${g.precioPorNoche.toLocaleString()}</p>
                     <p>${disponibleBadge}</p>
                 </div>
                 <div class="glamping-card-footer">
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${g.id}</td>
                 <td>${g.nombre}</td>
                 <td>${g.capacidad}</td>
-                <td>$${g.precio_por_noche.toLocaleString()}</td>
+                <td>$${g.precioPorNoche.toLocaleString()}</td>
                 <td>${g.disponible ? 'Sí' : 'No'}</td>
                 <td class="action-buttons">
                     <button class="btn-detalles" data-id="${g.id}">Detalles</button>
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${g.nombre}</h3>
                 <p><strong>ID:</strong> ${g.id}</p>
                 <p><strong>Capacidad:</strong> ${g.capacidad}</p>
-                <p><strong>Precio por noche:</strong> $${g.precio_por_noche}</p>
+                <p><strong>Precio por noche:</strong> $${g.precioPorNoche}</p>
                 <p><strong>Disponible:</strong> ${g.disponible ? 'Sí' : 'No'}</p>
                 <h4>Características:</h4>
                 <ul>${g.caracteristicas.map(c => `<li>${c}</li>`).join('')}</ul>`;
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
             glampingId.value = g.id;
             nombreInput.value = g.nombre;
             capacidadInput.value = g.capacidad;
-            precioPorNocheInput.value = g.precio_por_noche;
+            precioPorNocheInput.value = g.precioPorNoche;
             caracteristicasInput.value = g.caracteristicas.join(', ');
             disponibleInput.value = g.disponible.toString();
             btnGuardar.textContent = 'Actualizar';

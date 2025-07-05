@@ -1,37 +1,6 @@
 import json
 import os
-
-class Glamping:
-    def __init__(self, id, nombre, capacidad, precio_por_noche, caracteristicas, disponible=True):
-        self.id = id
-        self.nombre = nombre
-        self.capacidad = capacidad
-        self.precio_por_noche = precio_por_noche
-        self.caracteristicas = caracteristicas
-        self.disponible = disponible
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'nombre': self.nombre,
-            'capacidad': self.capacidad,
-            'precioPorNoche': self.precio_por_noche,
-            'caracteristicas': self.caracteristicas,
-            'disponible': self.disponible
-        }
-
-    @staticmethod
-    def from_dict(data):
-        return Glamping(
-            id=data.get('id'),
-            nombre=data['nombre'],
-            capacidad=int(data['capacidad']),
-            precio_por_noche=int(data['precioPorNoche']),
-            caracteristicas=data.get('caracteristicas', []),
-            disponible=data.get('disponible', True)
-        )
-
-
+from model.Glamping import Glamping
 class GlampingController:
     def __init__(self):
         self.archivo = 'data/glampings.json'
@@ -64,7 +33,7 @@ class GlampingController:
             id=nuevo_id,
             nombre=data['nombre'],
             capacidad=int(data['capacidad']),
-            precio_por_noche=int(data['precioPorNoche']),
+            precioPorNoche=int(data['precioPorNoche']),
             caracteristicas=data.get('caracteristicas', []),
             disponible=self._parse_bool(data.get('disponible', True))
         )

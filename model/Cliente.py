@@ -34,6 +34,8 @@ class Cliente:
             "telefono": self.telefono,
             "documento": self.documento
         }
+        
+    
 
     def guardar(self):
         try:
@@ -58,15 +60,7 @@ class Cliente:
             print(f"Error al guardar el cliente: {e}")
             return False
 
-    @staticmethod
-    def from_dict(data):
-        return Cliente(
-            id=data["id"],
-            nombre=data["nombre"],
-            email=data["email"],
-            telefono=data["telefono"],
-            documento=data["documento"]
-        )
+    
 
     @staticmethod
     def obtener_clientes():

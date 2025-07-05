@@ -1,40 +1,47 @@
 class Glamping:
-    def __init__(self, id, nombre, capacidad, precioPorNoche, caracteristicas=None, disponible=True):
+    
+    ARCHIVO = 'data/glampings.json'
+    
+    def __init__(self, id, nombre, capacidad, precioPorNoche, caracteristicas, disponible=True):
         self.id = id
         self.nombre = nombre
         self.capacidad = capacidad
         self.precioPorNoche = precioPorNoche
-        self.caracteristicas = caracteristicas or []
+        self.caracteristicas = caracteristicas
         self.disponible = disponible
+        
+    def getId(self):
+        return self.id
+    def getNombre(self):
+        return self.nombre
+    def getCapacidad(self):
+        return self.capacidad
+    def getPrecioPorNoche(self):
+        return self.precioPorNoche
+    def getCaracteristicas(self):
+        return self.caracteristicas
+    def isDisponible(self):
+        return self.disponible
+    
+        
 
-    # Convertir el objeto a diccionario (formato compatible con JSON y frontend)
     def to_dict(self):
         return {
-            "id": self.id,
-            "nombre": self.nombre,
-            "capacidad": self.capacidad,
-            "precioPorNoche": self.precioPorNoche,
-            "caracteristicas": self.caracteristicas,
-            "disponible": self.disponible
+            'id': self.id,
+            'nombre': self.nombre,
+            'capacidad': self.capacidad,
+            'precioPorNoche': self.precioPorNoche,
+            'caracteristicas': self.caracteristicas,
+            'disponible': self.disponible
         }
 
-    # Crear un objeto desde un diccionario (por ejemplo, desde JSON)
     @staticmethod
     def from_dict(data):
         return Glamping(
-            id=data.get("id"),
-            nombre=data.get("nombre"),
-            capacidad=int(data.get("capacidad", 0)),
-            precioPorNoche=int(data.get("precioPorNoche", 0)),
-            caracteristicas=data.get("caracteristicas", []),
-            disponible=Glamping._parse_bool(data.get("disponible", True))
+            id=data.get('id'),
+            nombre=data['nombre'],
+            capacidad=int(data['capacidad']),
+            precioPorNoche=int(data['precioPorNoche']),
+            caracteristicas=data.get('caracteristicas', []),
+            disponible=data.get('disponible', True)
         )
-
-    # Convertir string o bool a bool (true/false)
-    @staticmethod
-    def _parse_bool(value):
-        if isinstance(value, bool):
-            return value
-        if isinstance(value, str):
-            return value.strip().lower() == 'true'
-        return bool(value)
