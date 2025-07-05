@@ -1,217 +1,128 @@
-class GlampingController:
-    """
-    Controlador para la gestión de glampings.
-    """
+import json
+import os
 
+class Glamping:
+    def __init__(self, id, nombre, capacidad, precio_por_noche, caracteristicas, disponible=True):
+        self.id = id
+        self.nombre = nombre
+        self.capacidad = capacidad
+        self.precio_por_noche = precio_por_noche
+        self.caracteristicas = caracteristicas
+        self.disponible = disponible
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'capacidad': self.capacidad,
+            'precioPorNoche': self.precio_por_noche,
+            'caracteristicas': self.caracteristicas,
+            'disponible': self.disponible
+        }
+
+    @staticmethod
+    def from_dict(data):
+        return Glamping(
+            id=data.get('id'),
+            nombre=data['nombre'],
+            capacidad=int(data['capacidad']),
+            precio_por_noche=int(data['precioPorNoche']),
+            caracteristicas=data.get('caracteristicas', []),
+            disponible=data.get('disponible', True)
+        )
+
+
+class GlampingController:
     def __init__(self):
-        """Constructor del controlador de glampings."""
-        pass
+        self.archivo = 'data/glampings.json'
+        os.makedirs(os.path.dirname(self.archivo), exist_ok=True)
+        if not os.path.exists(self.archivo):
+            with open(self.archivo, 'w', encoding='utf-8') as f:
+                json.dump([], f)
 
     def obtener_todos(self):
-        """Obtiene todos los glampings.
-
-        Returns:
-            list: Lista de todos los glampings.
-        """
-        return Glamping.obtener_glampings()
-
-    def obtener_disponibles(self):
-        """Obtiene los glampings disponibles.
-
-        Returns:
-            list: Lista de glampings disponibles.
-        """
-        return Glamping.obtener_glampings_disponibles()
+        try:
+            with open(self.archivo, 'r', encoding='utf-8') as f:
+                datos = json.load(f)
+            return [Glamping.from_dict(d).to_dict() for d in datos]
+        except (FileNotFoundError, json.JSONDecodeError):
+            return []
 
     def buscar_por_id(self, id):
-        """Busca un glamping por su ID.
+        glampings = self.obtener_todos()
+        return next((g for g in glampings if g['id'] == id), None)
 
-        Args:
-            id (int): ID del glamping.
-
-        Returns:
-            Glamping or None: Glamping encontrado o None.
-        """
-        return Glamping.obtener_glamping_por_id(id)
-
-    def buscar_por_nombre(self, nombre):
-        """Busca glampings por nombre (búsqueda parcial).
-
-        Args:
-            nombre (str): Nombre o parte del nombre a buscar.
-
-        Returns:
-            list: Glampings que coinciden.
-        """
-        nombre_busqueda = nombre.lower()
-        return [g for g in self.obtener_todos() if nombre_busqueda in g.get_nombre().lower()]
-
-    def buscar_por_capacidad(self, capacidad):
-        """Busca glampings por capacidad mínima.
-
-        Args:
-            capacidad (int): Capacidad mínima.
-
-        Returns:
-            list: Glampings con capacidad igual o mayor.
-        """
-        return [g for g in Glamping.obtener_glampings() if g.get_capacidad() >= int(capacidad)]
-
-    def buscar_por_rango_precio(self, precio_min, precio_max):
-        """Busca glampings por rango de precio.
-
-        Args:
-            precio_min (int): Precio mínimo.
-            precio_max (int): Precio máximo.
-
-        Returns:
-            list: Glampings dentro del rango.
-        """
-        return [g for g in Glamping.obtener_glampings()
-                if int(precio_min) <= g.get_precio_por_noche() <= int(precio_max)]
-
-    def buscar_por_caracteristica(self, caracteristica):
-        """Busca glampings por característica.
-
-        Args:
-            caracteristica (str): Característica a buscar.
-
-        Returns:
-            list: Glampings que contienen la característica.
-        """
-        caracteristica = caracteristica.lower()
-        return [g for g in Glamping.obtener_glampings()
-                if any(c.lower().find(caracteristica) != -1 for c in g.get_caracteristicas())]
-
-    def crear(self, datos_glamping):
-        """Crea un nuevo glamping.
-
-        Args:
-            datos_glamping (dict): Datos del nuevo glamping.
-
-        Returns:
-            Glamping: El glamping creado.
-        """
-        errores = self.validar(datos_glamping)
+    def crear(self, data):
+        errores = self.validar(data)
         if errores:
-            raise ValueError(errores)
-
-        glamping = Glamping(
-            id=None,
-            nombre=datos_glamping['nombre'],
-            capacidad=int(datos_glamping['capacidad']),
-            precio_por_noche=int(datos_glamping['precio_por_noche']),
-            caracteristicas=datos_glamping.get('caracteristicas', []),
-            disponible=datos_glamping.get('disponible', True)
-        )
-        glamping.guardar()
-        return glamping
-
-    def actualizar(self, id, datos_glamping):
-        """Actualiza los datos de un glamping existente.
-
-        Args:
-            id (int): ID del glamping.
-            datos_glamping (dict): Nuevos datos.
-
-        Returns:
-            Glamping or None: Glamping actualizado o None.
-        """
-        glamping = self.buscar_por_id(id)
-        if not glamping:
-            return None
-
-        errores = self.validar(datos_glamping)
-        if errores:
-            raise ValueError(errores)
-
-        if 'nombre' in datos_glamping:
-            glamping.set_nombre(datos_glamping['nombre'])
-        if 'capacidad' in datos_glamping:
-            glamping.set_capacidad(int(datos_glamping['capacidad']))
-        if 'precio_por_noche' in datos_glamping:
-            glamping.set_precio_por_noche(int(datos_glamping['precio_por_noche']))
-        if 'caracteristicas' in datos_glamping:
-            glamping.set_caracteristicas(datos_glamping['caracteristicas'])
-        if 'disponible' in datos_glamping:
-            glamping.set_disponible(datos_glamping['disponible'])
-
-        glamping.guardar()
-        return glamping
-
-    def actualizar_disponibilidad(self, id, disponible):
-        """Actualiza la disponibilidad de un glamping.
-
-        Args:
-            id (int): ID del glamping.
-            disponible (bool): Nueva disponibilidad.
-
-        Returns:
-            Glamping or None: Glamping actualizado o None.
-        """
-        glamping = self.buscar_por_id(id)
-        if not glamping:
-            return None
-
-        glamping.set_disponible(disponible)
-        glamping.guardar()
-        return glamping
-
-    def eliminar(self, id):
-        """Elimina un glamping.
-
-        Args:
-            id (int): ID del glamping.
-
-        Returns:
-            bool: True si fue eliminado, False si no.
-        """
-        glamping = self.buscar_por_id(id)
-        if not glamping:
-            return False
-
-        reservas = ReservaController().obtener_reservas_glamping(id)
-        if reservas:
-            raise ValueError(f"No se puede eliminar el glamping porque tiene {len(reservas)} reservas asociadas")
+            return {'errores': errores}, 400
 
         glampings = self.obtener_todos()
-        nuevos_glampings = [g for g in glampings if g.get_id() != id]
-        guardar_glampings(nuevos_glampings)  # Función auxiliar asumida
-        return True
+        nuevo_id = max([g['id'] for g in glampings], default=0) + 1
 
-    def validar(self, datos_glamping):
-        """Valida los datos de un glamping.
+        nuevo = Glamping(
+            id=nuevo_id,
+            nombre=data['nombre'],
+            capacidad=int(data['capacidad']),
+            precio_por_noche=int(data['precioPorNoche']),
+            caracteristicas=data.get('caracteristicas', []),
+            disponible=self._parse_bool(data.get('disponible', True))
+        )
 
-        Args:
-            datos_glamping (dict): Datos del glamping.
+        glampings.append(nuevo.to_dict())
+        self._guardar_glampings(glampings)
+        return nuevo.to_dict()
 
-        Returns:
-            dict: Errores encontrados.
-        """
+    def actualizar(self, id, data):
+        glampings = self.obtener_todos()
+        index = next((i for i, g in enumerate(glampings) if g['id'] == id), None)
+
+        if index is None:
+            return {'error': 'Glamping no encontrado'}, 404
+
+        errores = self.validar(data)
+        if errores:
+            return {'errores': errores}, 400
+
+        glampings[index] = {
+            'id': id,
+            'nombre': data['nombre'],
+            'capacidad': int(data['capacidad']),
+            'precioPorNoche': int(data['precioPorNoche']),
+            'caracteristicas': data.get('caracteristicas', []),
+            'disponible': self._parse_bool(data.get('disponible', True))
+        }
+
+        self._guardar_glampings(glampings)
+        return glampings[index]
+
+    def eliminar(self, id):
+        glampings = self.obtener_todos()
+        filtrados = [g for g in glampings if g['id'] != id]
+
+        if len(filtrados) == len(glampings):
+            return {'error': 'Glamping no encontrado'}, 404
+
+        self._guardar_glampings(filtrados)
+        return {'mensaje': 'Glamping eliminado'}
+
+    def validar(self, data):
         errores = {}
-
-        nombre = datos_glamping.get('nombre', '').strip()
-        if not nombre:
+        if not data.get('nombre'):
             errores['nombre'] = 'El nombre es obligatorio'
-
-        capacidad = datos_glamping.get('capacidad')
-        try:
-            capacidad = int(capacidad)
-            if capacidad <= 0:
-                errores['capacidad'] = 'La capacidad debe ser un número positivo'
-        except (ValueError, TypeError):
-            errores['capacidad'] = 'La capacidad debe ser un número válido'
-
-        precio = datos_glamping.get('precio_por_noche')
-        try:
-            precio = int(precio)
-            if precio <= 0:
-                errores['precio_por_noche'] = 'El precio debe ser un número positivo'
-        except (ValueError, TypeError):
-            errores['precio_por_noche'] = 'El precio debe ser un número válido'
-
-        caracteristicas = datos_glamping.get('caracteristicas')
-        if caracteristicas is not None and not isinstance(caracteristicas, list):
-            errores['caracteristicas'] = 'Las características deben ser una lista'
-
+        if not str(data.get('capacidad', '')).isdigit():
+            errores['capacidad'] = 'Capacidad debe ser un número entero'
+        if not str(data.get('precioPorNoche', '')).isdigit():
+            errores['precioPorNoche'] = 'El precio por noche debe ser un número'
         return errores
+
+    def _guardar_glampings(self, datos):
+        with open(self.archivo, 'w', encoding='utf-8') as f:
+            json.dump(datos, f, indent=4, ensure_ascii=False)
+
+    def _parse_bool(self, value):
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, str):
+            return value.lower() == 'true'
+        return bool(value)

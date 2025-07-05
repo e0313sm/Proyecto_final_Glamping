@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Clientes - Sistema de Glamping</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
         <h1>Sistema de Gestión de Glamping</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="clientes.html">Clientes</a></li>
-                <li><a href="glampings.html">Glampings</a></li>
-                <li><a href="reservas.html">Reservas</a></li>
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('clientes') }}">Clientes</a></li>
+                <li><a href="{{ url_for('glampings') }}">Glampings</a></li>
+                <li><a href="{{ url_for('reservas') }}">Reservas</a></li>
             </ul>
         </nav>
     </header>
@@ -95,18 +95,11 @@
     
     <footer>
         <div class="container">
-            <p>&copy; 2023 Sistema de Gestión de Glamping. Todos los derechos reservados.</p>
+            <p>&copy; 2025 Sistema de Gestión de Glamping. Todos los derechos reservados.</p>
         </div>
     </footer>
-    
-    <!-- Inicialización de datos -->
-    <script src="js/init-data.js"></script>
-    
-    <!-- Modelos y Controladores -->
-    <script src="../model/Cliente.js"></script>
-    <script src="../controller/ClienteController.js"></script>
-    
-    <!-- Vista -->
-    <script src="js/clientes.js"></script>
+
+    <!-- Script principal -->
+    <script src="{{ url_for('static', filename='js/clientes.js') }}"></script>
 </body>
-</html> 
+</html>
